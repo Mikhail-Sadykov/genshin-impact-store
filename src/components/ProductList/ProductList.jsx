@@ -5,8 +5,9 @@ import {useTelegram} from '../../hooks/useTelegram';
 
 const product = [
     {id: '1', title: 'Джинсы', price: 5000, description: 'Самоцветы x60'},
-    {id: '1', title: 'Джинсы', price: 5000, description: 'Самоцветы x120'},
-    {id: '1', title: 'Джинсы', price: 5000, description: 'Самоцветы 240'}
+    {id: '2', title: 'Джинсы', price: 5000, description: 'Самоцветы x120'},
+    {id: '3', title: 'Джинсы', price: 5000, description: 'Самоцветы 240'},
+    {id: '4', title: 'Джинсы', price: 5000, description: 'Самоцветы 360'}
 ]
 
 const getTotalPrice = (items) => {
