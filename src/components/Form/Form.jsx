@@ -4,7 +4,7 @@ import './Form.css'
 const Form = () => {
     return (
         <div>
-
+            Страница форм
         </div>
     );
 };
