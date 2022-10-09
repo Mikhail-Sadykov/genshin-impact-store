@@ -10,7 +10,7 @@ const product = [
     {id: '4', title: 'Джинсы', price: 5000, description: 'Самоцветы 360'}
 ]
 
-const getTotalPrice = (items) => {
+const getTotalPrice = (items = []) => {
     return items.reduce((acc, item) => {
         return acc += item.price
     }, 0)
@@ -19,7 +19,6 @@ const getTotalPrice = (items) => {
 
 const ProductList = () => {
     const [addedItems, setAddedItems] = useState([]);
-    const {tg} = useTelegram();
     const onAdd = (product) => {
         const alreadyAdded = addedItems.find(item => item.id === product.id);
         let newItems = [];
@@ -33,7 +32,7 @@ const ProductList = () => {
 
         if(newItems.length === 0) {
             tg.MainButton.hide();
-        }else {
+        } else {
             tg.MainButton.show();
             tg.MainButton.setParams({
                 text: `Купить ${getTotalPrice(newItems)}`
@@ -42,11 +41,12 @@ const ProductList = () => {
     }
     return (
         <div className={'list'}>
-            {product.map(item => (
+            {products.map(item => (
                 <ProductItem
-                product={item}
-                onAdd={onAdd}
-                className={'item'}/>
+                    product={item}
+                    onAdd={onAdd}
+                    className={'item'}
+                />
             ))}
         </div>
     );
