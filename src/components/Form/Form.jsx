@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import './Form.css'
-import {useTelegram} from '../../hooks/useTelegram';
+import './Form.css';
+import {useTelegram} from "../../hooks/useTelegram";
 
 const Form = () => {
     const [country, setCountry] = useState('');
@@ -30,21 +30,24 @@ const Form = () => {
         })
     }, [])
 
-    useEffect(() =>{
-        if(!street || !country){
+    useEffect(() => {
+        if(!street || !country) {
             tg.MainButton.hide();
-        }else{
+        } else {
             tg.MainButton.show();
         }
     }, [country, street])
+
     const onChangeCountry = (e) => {
-        setCountry(e.targer.value)
+        setCountry(e.target.value)
     }
+
     const onChangeStreet = (e) => {
-        setStreet(e.targer.value)
+        setStreet(e.target.value)
     }
+
     const onChangeSubject = (e) => {
-        setSubject(e.targer.value)
+        setSubject(e.target.value)
     }
 
     return (
@@ -55,17 +58,18 @@ const Form = () => {
                 type="text"
                 placeholder={'Страна'}
                 value={country}
-                onChange={onChangeCountry}/>
+                onChange={onChangeCountry}
+            />
             <input
                 className={'input'}
                 type="text"
                 placeholder={'Улица'}
                 value={street}
-                onChange={onChangeStreet}/>
-            <select
-                value={subject} onChange={onChangeSubject} className={'select'}>
+                onChange={onChangeStreet}
+            />
+            <select value={subject} onChange={onChangeSubject} className={'select'}>
                 <option value={'physical'}>Физ.лицо</option>
-                <option value={'legal'}>Юр. лицо</option>
+                <option value={'legal'}>Юр.лицо</option>
             </select>
         </div>
     );
