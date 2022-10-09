@@ -3,11 +3,10 @@ import './Form.css'
 import {useTelegram} from '../../hooks/useTelegram';
 
 const Form = () => {
-    const  [country, setCountry] = useState('')
-    const  [street, setStreet] = useState('')
-    const  [subject, setSubject] = useState('physical')
-    const{tg} = useTelegram();
-
+    const [country, setCountry] = useState('');
+    const [street, setStreet] = useState('');
+    const [subject, setSubject] = useState('physical');
+    const {tg} = useTelegram();
 
     const onSendData = useCallback(() => {
         const data = {
@@ -16,13 +15,14 @@ const Form = () => {
             subject
         }
         tg.sendData(JSON.stringify(data));
-    }, [])
+    }, [country, street, subject])
+
     useEffect(() => {
-        tg.WebApp.onEvent('mainButtonClicked', onSendData)
+        tg.onEvent('mainButtonClicked', onSendData)
         return () => {
-            tg.WebApp.offEvent('mainButtonClicked', onSendData)
+            tg.offEvent('mainButtonClicked', onSendData)
         }
-    }, [])
+    }, [onSendData])
 
     useEffect(() => {
         tg.MainButton.setParams({
