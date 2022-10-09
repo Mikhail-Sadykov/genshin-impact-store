@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
-import './ProductList.css'
-import ProductItem from '../ProductItem/ProductItem';
-import {useTelegram} from '../../hooks/useTelegram';
+import './ProductList.css';
+import ProductItem from "../ProductItem/ProductItem";
+import {useTelegram} from "../../hooks/useTelegram";
+import {useCallback, useEffect} from "react";
 
 const products = [
-    {id: '1', title: 'Джинсы', price: 5000, description: 'Самоцветы x60'},
-    {id: '2', title: 'Джинсы', price: 5000, description: 'Самоцветы x120'},
-    {id: '3', title: 'Джинсы', price: 5000, description: 'Самоцветы 240'},
-    {id: '4', title: 'Джинсы', price: 5000, description: 'Самоцветы 360'}
+    {id: '1', title: 'Премогемы', price: 5000, description: 'Самоцветы x60'},
+    {id: '2', title: 'Премогемы', price: 5000, description: 'Самоцветы x120'},
+    {id: '3', title: 'Премогемы', price: 5000, description: 'Самоцветы 240'},
+    {id: '4', title: 'Премогемы', price: 5000, description: 'Самоцветы 360'}
 ]
 
 const getTotalPrice = (items = []) => {
@@ -19,15 +20,40 @@ const getTotalPrice = (items = []) => {
 
 const ProductList = () => {
     const [addedItems, setAddedItems] = useState([]);
+    const {tg, queryId} = useTelegram();
+
+    const onSendData = useCallback(() => {
+        const data = {
+            products: addedItems,
+            totalPrice: getTotalPrice(addedItems),
+            queryId,
+        }
+        fetch('http://localhost:8080', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+    }, [addedItems])
+
+    useEffect(() => {
+        tg.onEvent('mainButtonClicked', onSendData)
+        return () => {
+            tg.offEvent('mainButtonClicked', onSendData)
+        }
+    }, [onSendData])
+
     const onAdd = (product) => {
         const alreadyAdded = addedItems.find(item => item.id === product.id);
         let newItems = [];
 
         if(alreadyAdded) {
             newItems = addedItems.filter(item => item.id !== product.id);
-        }else {
+        } else {
             newItems = [...addedItems, product];
         }
+
         setAddedItems(newItems)
 
         if(newItems.length === 0) {
@@ -39,6 +65,7 @@ const ProductList = () => {
             })
         }
     }
+
     return (
         <div className={'list'}>
             {products.map(item => (
