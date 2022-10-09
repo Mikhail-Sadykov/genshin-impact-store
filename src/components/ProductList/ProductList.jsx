@@ -3,7 +3,7 @@ import './ProductList.css'
 import ProductItem from '../ProductItem/ProductItem';
 import {useTelegram} from '../../hooks/useTelegram';
 
-const products = [
+const product = [
     {id: '1', title: 'Джинсы', price: 5000, description: 'Самоцветы x60'},
     {id: '1', title: 'Джинсы', price: 5000, description: 'Самоцветы x120'},
     {id: '1', title: 'Джинсы', price: 5000, description: 'Самоцветы 240'}
